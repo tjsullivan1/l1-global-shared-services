@@ -32,7 +32,7 @@ resource acrRG 'Microsoft.Resources/resourceGroups@2021-01-01' = {
 
 module acr 'br:tjsiacdemoacr.azurecr.io/bicep/modules/acr:1.1.0' = {
   name: 'acrDeployment'
-	scope: acrRg
+	scope: acrRG
 	params: {
 		acrSku: acrSku
 	  acrName: acrName
