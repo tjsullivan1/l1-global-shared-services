@@ -38,6 +38,7 @@ jobs:
       - name: Get Current Image Version & Build New Version
         run: |
           az bicep install
+          location="${{ env.AZURE_LOCATION }}"
           pushd infrastructure
 
           current=`date +%Y%m%d-%s`
@@ -51,9 +52,9 @@ jobs:
             if [[ -z $params_file ]]
             then
               echo "DEBUG: no params file matching prefix $file_prefix, deploying without parameters"
-              az deployment sub create --name $deployment_name --location ${{ env.AZURE_LOCATION }} --template-file $template
+              az deployment sub create --name $deployment_name --location $location --template-file $template
             else
-              az deployment sub create --name $deployment_name --location ${{ env.AZURE_LOCATION }} --template-file $template --parameters @$params_file
+              az deployment sub create --name $deployment_name --location $location --template-file $template --parameters @$params_file
             fi
           done
 
