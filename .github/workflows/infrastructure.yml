@@ -53,7 +53,7 @@ jobs:
               echo "DEBUG: no params file matching prefix $file_prefix, deploying without parameters"
               az deployment sub create --name $deployment_name --location ${{ env.AZURE_LOCATION }} --template-file $template
             else
-              az deployment sub create --name $deployment_name --location ${{ env.AZURE_LOCATION }} --template-file $template --parameters @{$params_file}
+              az deployment sub create --name $deployment_name --location ${{ env.AZURE_LOCATION }} --template-file $template --parameters @$params_file
             fi
           done
 
