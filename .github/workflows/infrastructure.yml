@@ -48,7 +48,7 @@ jobs:
           do
             template="$file_prefix.bicep"
             params_file=`ls $file_prefix.parameters.json`
-            deployment_name="$current deployment of $file_prefix"
+            deployment_name="$current-deployment-of-$file_prefix"
             if [[ -z $params_file ]]
             then
               echo "DEBUG: no params file matching prefix $file_prefix, deploying without parameters"
