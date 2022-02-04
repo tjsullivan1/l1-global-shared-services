@@ -58,4 +58,4 @@ jobs:
             fi
           done
 
-          popd infrastructure
+          popd

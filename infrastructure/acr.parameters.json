@@ -17,7 +17,8 @@
       "tags": {
         "value": {
           "testTag": "testValue",
-          "testTag2": "testValue2"
+          "testTag2": "testValue2",
+          "testTag3": "testValue3"
         }
       }
     }
