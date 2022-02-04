@@ -5,6 +5,9 @@
       "resourceGroupName": {
         "value": "rg-iacdemo2"
       },
+      "location": {
+        "value": "eastus"
+      },
       "acrName": {
         "value": "tjsiacdemoacr2"
       },
