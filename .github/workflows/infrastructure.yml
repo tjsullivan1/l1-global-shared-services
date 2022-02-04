@@ -13,6 +13,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  AZURE_LOCATION: 'eastus'
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -31,3 +34,27 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Get Current Image Version & Build New Version
+        run: |
+          az bicep install
+          pushd infrastructure
+
+          current=`date +%Y%m%d-%s`
+          files=`ls | grep .bicep | cut -f1 -d'.'`
+          
+          for file_prefix in $files
+          do
+            template="$file_prefix.bicep"
+            params_file=`ls $file_prefix.parameters.json`
+            deployment_name="$current deployment of $file_prefix"
+            if [[ -z $params_file ]]
+            then
+              echo "DEBUG: no params file matching prefix $file_prefix, deploying without parameters"
+              az deployment sub create --name $deployment_name --location ${{ env.AZURE_LOCATION }} --template-file $template
+            else
+              az deployment sub create --name $deployment_name --location ${{ env.AZURE_LOCATION }} --template-file $template --parameters @{$params_file}
+            fi
+          done
+
+          popd infrastructure
